@@ -1,0 +1,4 @@
+spring:
+  profiles:
+    # 启用的配置信息
+    active: dev

@@ -2,6 +2,7 @@
 ### 微服务解决
 https://www.nginx.com/blog/introduction-to-microservices/
 https://blog.csdn.net/lmy86263/article/details/74276330
+http://www.ityouknow.com/spring-cloud.html
 
 ### 服务注册及发现——Eureka
 1. 服务发现模式：客户端、服务端
@@ -80,14 +81,33 @@ Hystrix 提供缓存功能，作用是：
 这个还是静态的，得配合 Spring Cloud Bus 实现动态的配置更新。
 
 
+### 消息总线——Bus
+
+http://www.ityouknow.com/springcloud/2017/05/26/springcloud-config-eureka-bus.html
+
 ### 服务交互——Cloud Stream
-
-
+作用：构建消息驱动能力的框架
+- Binder
+	应用与消息中间件之间的粘合剂，很方便的连接中间件，可以动态的改变消息的 destinations
+	（对应于 Kafka 的topic，Rabbit MQ 的 exchanges）
+- Publish-Subscribe
+	生产者把消息通过某个 topic 广播出去（Spring Cloud Stream 中的 destinations）。
+	其他的微服务，通过订阅特定 topic 来获取广播出来的消息来触发业务的进行。
+- Consumer Groups
+	微服务中动态的缩放同一个应用的数量以此来达到更高的处理能力是非常必须的。对于这种情况，同一个事件防止被重复消费，
+	只要把这些应用放置于同一个 “group” 中，就能够保证消息只会被其中一个应用消费一次
+- Durability
+	消息事件的持久化是必不可少的。Spring Cloud Stream 可以动态的选择一个消息队列是持久化，还是 present。
+- Bindings
+	bindings 是我们通过配置把应用和spring cloud stream 的 binder 绑定在一起，
+	只需要修改 binding 的配置来达到动态修改topic、exchange、type等一系列信息而不需要修改一行代码。
 
 ### 分布式服务跟踪——Sleuth
+参考：
+https://zipkin.io/pages/instrumenting.html
 
-
-### 消息总线——Bus
+Sleuth集成ZipKin和Rabbit
 
 
 ### 服务监控
+http://www.ityouknow.com/springboot/2018/02/06/spring-boot-actuator.html
